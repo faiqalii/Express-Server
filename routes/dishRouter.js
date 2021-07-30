@@ -153,7 +153,7 @@ dishRouter.route('/:dishId/comments')
 .delete((req, res, next) => {
     Dishes.findById(req.params.dishId)
     .then((dish) => {
-        if (dish && dish.comments.length) {
+        if (dish!= null && dish.comments.length != null) {
             // dish exists and has comments: remove comments
             for (let i = (dish.comments.length - 1); i >= 0; i--) {
               dish.comments.id(dish.comments[i]._id).remove();
@@ -240,32 +240,6 @@ dishRouter.route('/:dishId/comments/:commentId')
     .catch((err) => next(err));
 })
 
-// .delete((req, res, next) => {
-//     Dishes.findById(req.params.dishId)
-//       .then((dish) => {
-//         if (dish && dish.comments.length) {
-//           // dish exists and has comments: remove comments
-//           for (let i = (dish.comments.length - 1); i >= 0; i--) {
-//             dish.comments.id(dish.comments[i]._id).remove();
-//           }
-//           return dish.save();
-//         } else if (dish) {
-//           // dish has no comments to remove
-//           return dish;
-//         } else {
-//           // dish does not exist
-//           const err = new Error('Dish ' + req.params.dishId + ' not found');
-//           err.status = 404;
-//           throw err;
-//         }
-//       })
-//     //   .then((dish) => {
-//     //     res.statusCode = 200;
-//     //     res.setHeader('Content-Type', 'application/json');
-//     //     res.json(dish);
-//     //   })
-//       .catch((err) => next(err));
-// });
 
 .delete((req, res, next) => {
     Dishes.findById(req.params.dishId)
